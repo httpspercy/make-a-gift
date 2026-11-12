@@ -1,0 +1,20 @@
+{
+  "name": "Make a Gift – Surprises They'll Remember",
+  "short_name": "Make a Gift",
+  "description": "Turn a gift into a surprise with secret codes, photo puzzles, voice notes, and mini-games.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#7f2419",
+  "theme_color": "#7f2419",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "entertainment", "social"]
+}

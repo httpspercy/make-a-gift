@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src 'self' blob:; manifest-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>Make a Gift – Surprises They'll Remember</title>
+  <meta name="description" content="Turn a gift into a surprise. Add secret codes, photo puzzles, voice notes and spin-to-win games, then share it with one private link.">
+  <meta name="theme-color" content="#7f2419">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Make a Gift">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Make a Gift – Surprises They'll Remember">
+  <meta property="og:description" content="Turn a gift into a surprise. Add secret codes, photo puzzles, voice notes and spin-to-win games, then share it with one private link.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="page">
+   <div id="builder">
+    <header class="wiz-head">
+      <button id="wiz-back" type="button" class="step-back" hidden>← Back</button>
+      <div class="wiz-progress" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+      <span id="wiz-count" class="wiz-count" aria-live="polite">Step 1 of 3</span>
+    </header>
+
+    <section class="step" data-step="1" aria-labelledby="s1">
+      <h2 id="s1" class="step-title">Step 1. <em>Add Your Names</em></h2>
+      <p class="step-sub">Who is this surprise from, and who is it for?</p>
+      <div class="names">
+        <div>
+          <label class="field-label" for="from">From</label>
+          <input id="from" name="from" class="field" type="text" maxlength="40" autocomplete="off">
+        </div>
+        <div>
+          <label class="field-label" for="to">To</label>
+          <input id="to" name="to" class="field" type="text" maxlength="40" autocomplete="off">
+        </div>
+      </div>
+    </section>
+
+    <section class="step" data-step="2" aria-labelledby="s2" hidden>
+      <h2 id="s2" class="step-title">Step 2. <em>Choose a Theme</em></h2>
+      <p class="step-sub">Pick the color and style of every page in your gift.</p>
+      <div class="theme-layout">
+        <div class="theme-preview" aria-hidden="true">
+          <span class="tp-emoji">🎁</span>
+          <strong id="tp-to" class="tp-to"></strong>
+          <span id="tp-from" class="tp-from"></span>
+        </div>
+        <div id="themes" class="theme-grid" role="group" aria-label="Theme"></div>
+      </div>
+    </section>
+
+    <section class="step" data-step="3" aria-labelledby="s3" hidden>
+      <h2 id="s3" class="step-title">Step 3. <em>Add Pages</em></h2>
+      <p class="step-sub">Tap the surprises you want to include in your gift.</p>
+      <div id="addpage" class="type-grid"></div>
+      <div id="cards" class="cards"></div>
+    </section>
+
+    <div id="wiz-foot" class="wiz-foot">
+      <button id="next-btn" class="primary" type="button">Next →</button>
+    </div>
+
+   </div>
+
+  </main>
+
+  <div id="result" class="viewer" hidden>
+    <div class="viewer-header">
+      <button id="exit-btn" class="viewer-btn" type="button" aria-label="Back to edit">← Edit</button>
+      <button id="sound-btn" class="viewer-btn sound-toggle" type="button" aria-label="Toggle sound">🔊</button>
+    </div>
+    <div id="stage" class="stage"></div>
+    <canvas id="fx-canvas" class="fx-canvas" aria-hidden="true"></canvas>
+  </div>
+
+  <dialog id="finish-modal" class="modal" aria-labelledby="finish-title">
+    <div class="modal-box finish-box" tabindex="-1" autofocus>
+      <div class="finish-badge" aria-hidden="true">🎁</div>
+      <h2 id="finish-title" class="modal-title">Your gift is ready</h2>
+      <p id="summary" class="modal-sub"></p>
+      <div class="sheet-actions">
+        <button id="finish" class="choice choice-main" type="button">
+          <span class="choice-ico" aria-hidden="true">👀</span>
+          <span class="choice-name">Preview</span>
+          <span class="choice-hint">See it like they will</span>
+        </button>
+        <button id="share-btn" class="choice" type="button">
+          <span class="choice-ico" aria-hidden="true">🔗</span>
+          <span class="choice-name">Share Link</span>
+          <span class="choice-hint">Copy &amp; send it</span>
+        </button>
+      </div>
+      <button id="close-finish" class="finish-close" type="button">Keep editing</button>
+    </div>
+  </dialog>
+
+  <dialog id="share-modal" class="modal" aria-labelledby="share-title">
+    <div class="modal-box finish-box" tabindex="-1">
+      <div class="finish-badge" aria-hidden="true">🔗</div>
+      <h2 id="share-title" class="modal-title">Share your gift</h2>
+      <p class="modal-sub">Send this link so they can open their surprise.</p>
+      <input id="share-url" class="field share-input" type="text" readonly aria-label="Gift share link">
+      <p id="share-warn" class="modal-sub" role="note" hidden>This link is long because it carries a voice clip. Some chat apps cut long links off, so send it in a message by itself and check that it opens.</p>
+      <div class="sheet-actions">
+        <button id="copy-btn" class="pill pill-main" type="button">Copy link</button>
+        <button id="open-link-btn" class="pill" type="button">Open ↗</button>
+      </div>
+      <button id="close-share" class="finish-close" type="button">Close</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
