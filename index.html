@@ -110,8 +110,15 @@
       <input id="share-url" class="field share-input" type="text" readonly aria-label="Gift share link">
       <p id="share-warn" class="modal-sub" role="note" hidden>This link is long because it carries a voice clip. Some chat apps cut long links off, so send it in a message by itself and check that it opens.</p>
       <div class="sheet-actions">
-        <button id="copy-btn" class="pill pill-main" type="button">Copy link</button>
+        <button id="native-share-btn" class="pill pill-main" type="button">Share 📤</button>
+        <button id="copy-btn" class="pill" type="button">Copy link</button>
+        <button id="qr-btn" class="pill" type="button">QR Code 📱</button>
         <button id="open-link-btn" class="pill" type="button">Open ↗</button>
+      </div>
+      <div id="qr-box" class="qr-box" hidden>
+        <canvas id="qr-canvas" width="220" height="220" aria-label="QR Code to open this gift"></canvas>
+        <p class="qr-hint">Scan with your phone camera to open!</p>
+        <button id="download-qr-btn" class="qr-download-btn" type="button">Download QR Image 📥</button>
       </div>
       <button id="close-share" class="finish-close" type="button">Close</button>
     </div>
